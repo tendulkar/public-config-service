@@ -1,1 +1,1 @@
-# public_config_service
+# public-config-service
