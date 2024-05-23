@@ -21,6 +21,33 @@ import (
 	"stellarsky.ai/platform/public-config-service/service"
 )
 
+func setupRoutesWithMux(api *mux.Router, typeHandler *handler.TypeHandler, validationHandler *handler.ValidationHandler,
+	attributeHandler *handler.AttributeHandler, formHandler *handler.FormHandler) {
+	api.HandleFunc("/types", typeHandler.GetAllTypes).Methods("GET")
+	api.HandleFunc("/types", typeHandler.CreateType).Methods("POST")
+	api.HandleFunc("/types/{id}", typeHandler.GetType).Methods("GET")
+	api.HandleFunc("/types/{id}", typeHandler.UpdateType).Methods("PUT")
+	api.HandleFunc("/types/{id}", typeHandler.DeleteType).Methods("DELETE")
+
+	api.HandleFunc("/validations", validationHandler.GetAllValidations).Methods("GET")
+	api.HandleFunc("/validations", validationHandler.CreateValidation).Methods("POST")
+	api.HandleFunc("/validations/{id}", validationHandler.GetValidation).Methods("GET")
+	api.HandleFunc("/validations/{id}", validationHandler.UpdateValidation).Methods("PUT")
+	api.HandleFunc("/validations/{id}", validationHandler.DeleteValidation).Methods("DELETE")
+
+	api.HandleFunc("/attributes", attributeHandler.GetAllAttributes).Methods("GET")
+	api.HandleFunc("/attributes", attributeHandler.CreateAttribute).Methods("POST")
+	api.HandleFunc("/attributes/{id}", attributeHandler.GetAttribute).Methods("GET")
+	api.HandleFunc("/attributes/{id}", attributeHandler.UpdateAttribute).Methods("PUT")
+	api.HandleFunc("/attributes/{id}", attributeHandler.DeleteAttribute).Methods("DELETE")
+
+	api.HandleFunc("/forms", formHandler.GetAllForms).Methods("GET")
+	api.HandleFunc("/forms", formHandler.CreateForm).Methods("POST")
+	api.HandleFunc("/forms/{id}", formHandler.GetForm).Methods("GET")
+	api.HandleFunc("/forms/{id}", formHandler.UpdateForm).Methods("PUT")
+	api.HandleFunc("/forms/{id}", formHandler.DeleteForm).Methods("DELETE")
+}
+
 func main() {
 	// Initialize Logger
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
@@ -69,29 +96,7 @@ func main() {
 
 	// Routes
 	api := r.PathPrefix("/api/v1").Subrouter()
-	api.HandleFunc("/types", typeHandler.GetAllTypes).Methods("GET")
-	api.HandleFunc("/types", typeHandler.CreateType).Methods("POST")
-	api.HandleFunc("/types/{id}", typeHandler.GetType).Methods("GET")
-	api.HandleFunc("/types/{id}", typeHandler.UpdateType).Methods("PUT")
-	api.HandleFunc("/types/{id}", typeHandler.DeleteType).Methods("DELETE")
-
-	api.HandleFunc("/validations", validationHandler.GetAllValidations).Methods("GET")
-	api.HandleFunc("/validations", validationHandler.CreateValidation).Methods("POST")
-	api.HandleFunc("/validations/{id}", validationHandler.GetValidation).Methods("GET")
-	api.HandleFunc("/validations/{id}", validationHandler.UpdateValidation).Methods("PUT")
-	api.HandleFunc("/validations/{id}", validationHandler.DeleteValidation).Methods("DELETE")
-
-	api.HandleFunc("/attributes", attributeHandler.GetAllAttributes).Methods("GET")
-	api.HandleFunc("/attributes", attributeHandler.CreateAttribute).Methods("POST")
-	api.HandleFunc("/attributes/{id}", attributeHandler.GetAttribute).Methods("GET")
-	api.HandleFunc("/attributes/{id}", attributeHandler.UpdateAttribute).Methods("PUT")
-	api.HandleFunc("/attributes/{id}", attributeHandler.DeleteAttribute).Methods("DELETE")
-
-	api.HandleFunc("/forms", formHandler.GetAllForms).Methods("GET")
-	api.HandleFunc("/forms", formHandler.CreateForm).Methods("POST")
-	api.HandleFunc("/forms/{id}", formHandler.GetForm).Methods("GET")
-	api.HandleFunc("/forms/{id}", formHandler.UpdateForm).Methods("PUT")
-	api.HandleFunc("/forms/{id}", formHandler.DeleteForm).Methods("DELETE")
+	setupRoutesWithMux(api, typeHandler, validationHandler, attributeHandler, formHandler)
 
 	// Initialize server
 	srv := &http.Server{

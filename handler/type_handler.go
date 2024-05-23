@@ -39,7 +39,7 @@ func (h *TypeHandler) GetAllTypes(w http.ResponseWriter, r *http.Request) {
 func (h *TypeHandler) GetType(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
 	if err != nil {
-		h.logger.Error("error converting id", slog.Any("error", err))
+		h.logger.Error("error converting id", slog.Any("error", err), slog.Any("vars", mux.Vars(r)))
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
