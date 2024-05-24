@@ -1,0 +1,157 @@
+application,form_name,attribute_name,attribute_label,type_name
+Social Media Network,Registration,username,Username,text
+Social Media Network,Registration,email,Email,email
+Social Media Network,Registration,password,Password,password
+Social Media Network,Registration,confirm_password,Confirm Password,password
+Social Media Network,Registration,captcha,Captcha,captcha
+Social Media Network,Login,username,Username,text
+Social Media Network,Login,password,Password,password
+Social Media Network,Profile Management,profile_picture,Profile Picture,file
+Social Media Network,Profile Management,bio,Bio,textarea
+Social Media Network,Profile Management,website,Website,url
+Social Media Network,Profile Management,location,Location,text
+Social Media Network,Profile Management,phone_number,Phone Number,tel
+Social Media Network,Profile Management,birth_date,Birth Date,date
+Social Media Network,Profile Management,gender,Gender,dropdown
+Social Media Network,Profile Management,interests,Interests,multiselect
+Social Media Network,Post Creation,text_content,Text Content,textarea
+Social Media Network,Post Creation,image_video_upload,Image/Video Upload,file
+Social Media Network,Post Creation,tags,Tags/Hashtags,text
+Social Media Network,Post Creation,location,Location,geolocation
+Social Media Network,Post Creation,visibility,Visibility,dropdown
+Social Media Network,Post Creation,scheduled_time,Scheduled Time,datetime
+Social Media Network,Comment,comment_text,Comment Text,textarea
+Social Media Network,Comment,reply_to,Reply To,hidden
+Social Media Network,Comment,attachments,Attachments,file
+Social Media Network,Interaction,reaction,Reactions,button
+Social Media Network,Interaction,share,Share,button
+Social Media Network,Interaction,bookmark,Bookmark,button
+CRM Application,Customer Information,first_name,First Name,text
+CRM Application,Customer Information,last_name,Last Name,text
+CRM Application,Customer Information,email,Email,email
+CRM Application,Customer Information,phone_number,Phone Number,tel
+CRM Application,Customer Information,address,Address,text
+CRM Application,Customer Information,company,Company,text
+CRM Application,Customer Information,job_title,Job Title,text
+CRM Application,Customer Information,website,Website,url
+CRM Application,Customer Information,industry,Industry,dropdown
+CRM Application,Customer Information,lead_status,Lead Status,dropdown
+CRM Application,Customer Information,lead_source,Lead Source,dropdown
+CRM Application,Customer Information,annual_revenue,Annual Revenue,number
+CRM Application,Customer Information,number_of_employees,Number of Employees,number
+CRM Application,Customer Information,notes,Notes,textarea
+CRM Application,Sales and Leads,lead_source,Lead Source,dropdown
+CRM Application,Sales and Leads,company_name,Company Name,text
+CRM Application,Sales and Leads,job_title,Job Title,text
+CRM Application,Sales and Leads,estimated_value,Estimated Value,number
+CRM Application,Sales and Leads,close_date,Close Date,date
+CRM Application,Sales and Leads,probability,Probability,percentage
+CRM Application,Sales and Leads,lead_owner,Lead Owner,text
+CRM Application,Sales and Leads,stage,Stage,dropdown
+CRM Application,Sales and Leads,priority,Priority,dropdown
+CRM Application,Sales and Leads,next_step,Next Step,text
+CRM Application,Sales and Leads,expected_close_date,Expected Close Date,date
+CRM Application,Interaction and Activity,meeting_date_time,Meeting Date/Time,datetime
+CRM Application,Interaction and Activity,notes,Notes,textarea
+CRM Application,Interaction and Activity,follow_up_date,Follow-up Date,date
+CRM Application,Interaction and Activity,call_type,Call Type,dropdown
+CRM Application,Interaction and Activity,call_duration,Call Duration,time
+CRM Application,Interaction and Activity,meeting_location,Meeting Location,text
+CRM Application,Interaction and Activity,task_description,Task Description,textarea
+CRM Application,Interaction and Activity,task_due_date,Task Due Date,date
+CRM Application,Interaction and Activity,task_priority,Task Priority,dropdown
+CRM Application,Interaction and Activity,task_status,Task Status,dropdown
+eCommerce Application,Registration,username,Username,text
+eCommerce Application,Registration,email,Email,email
+eCommerce Application,Registration,password,Password,password
+eCommerce Application,Registration,confirm_password,Confirm Password,password
+eCommerce Application,Registration,phone_number,Phone Number,tel
+eCommerce Application,Registration,referral_code,Referral Code,text
+eCommerce Application,Registration,newsletter_subscription,Newsletter Subscription,checkbox
+eCommerce Application,Login,username,Username,text
+eCommerce Application,Login,password,Password,password
+eCommerce Application,Product Listing,product_name,Product Name,text
+eCommerce Application,Product Listing,description,Description,textarea
+eCommerce Application,Product Listing,price,Price,number
+eCommerce Application,Product Listing,stock_quantity,Stock Quantity,number
+eCommerce Application,Product Listing,category,Category,dropdown
+eCommerce Application,Product Listing,images,Images,file
+eCommerce Application,Product Listing,sku,SKU,text
+eCommerce Application,Product Listing,brand,Brand,text
+eCommerce Application,Product Listing,weight,Weight,number
+eCommerce Application,Product Listing,dimensions,Dimensions,text
+eCommerce Application,Product Listing,color,Color,multiselect
+eCommerce Application,Product Listing,size,Size,multiselect
+eCommerce Application,Product Listing,tags,Tags,text
+eCommerce Application,Product Listing,shipping_details,Shipping Details,textarea
+eCommerce Application,Product Listing,discount,Discount,percentage
+eCommerce Application,Product Listing,availability,Availability,dropdown
+eCommerce Application,Product Listing,warranty,Warranty,text
+eCommerce Application,Checkout and Payment,shipping_address,Shipping Address,text
+eCommerce Application,Checkout and Payment,billing_address,Billing Address,text
+eCommerce Application,Checkout and Payment,payment_method,Payment Method,dropdown
+eCommerce Application,Checkout and Payment,credit_card_number,Credit Card Number,text
+eCommerce Application,Checkout and Payment,credit_card_expiry,Credit Card Expiry,text
+eCommerce Application,Checkout and Payment,credit_card_cvv,Credit Card CVV,text
+eCommerce Application,Checkout and Payment,order_notes,Order Notes,textarea
+eCommerce Application,Checkout and Payment,promo_code,Promo Code,text
+eCommerce Application,Checkout and Payment,gift_wrap,Gift Wrap,checkbox
+eCommerce Application,Checkout and Payment,delivery_instructions,Delivery Instructions,textarea
+eCommerce Application,Checkout and Payment,order_summary,Order Summary,readonly
+eCommerce Application,Review and Rating,rating,Rating,number
+eCommerce Application,Review and Rating,review_text,Review Text,textarea
+eCommerce Application,Review and Rating,product_images,Product Images,file
+eCommerce Application,Review and Rating,review_title,Review Title,text
+eCommerce Application,Review and Rating,reviewer_name,Reviewer Name,text
+eCommerce Application,Review and Rating,reviewer_email,Reviewer Email,email
+eCommerce Application,Review and Rating,review_date,Review Date,date
+eCommerce Application,Review and Rating,verified_purchase,Verified Purchase,checkbox
+eCommerce Application,Review and Rating,review_response,Review Response,textarea
+eCommerce Application,Review and Rating,helpful_count,Helpful Count,number
+eCommerce Application,Account Management,first_name,First Name,text
+eCommerce Application,Account Management,last_name,Last Name,text
+eCommerce Application,Account Management,email,Email,email
+eCommerce Application,Account Management,phone_number,Phone Number,tel
+eCommerce Application,Account Management,billing_address,Billing Address,text
+eCommerce Application,Account Management,shipping_address,Shipping Address,text
+eCommerce Application,Account Management,password,Password,password
+eCommerce Application,Account Management,confirm_password,Confirm Password,password
+eCommerce Application,Account Management,order_history,Order History,readonly
+eCommerce Application,Account Management,wishlist,Wishlist,readonly
+eCommerce Application,Account Management,newsletter_subscription,Newsletter Subscription,checkbox
+eCommerce Application,Order Tracking,order_number,Order Number,text
+eCommerce Application,Order Tracking,order_date,Order Date,date
+eCommerce Application,Order Tracking,shipping_date,Shipping Date,date
+eCommerce Application,Order Tracking,delivery_date,Delivery Date,date
+eCommerce Application,Order Tracking,tracking_number,Tracking Number,text
+eCommerce Application,Order Tracking,carrier,Carrier,text
+eCommerce Application,Order Tracking,order_status,Order Status,readonly
+eCommerce Application,Order Tracking,shipping_address,Shipping Address,text
+eCommerce Application,Order Tracking,billing_address,Billing Address,text
+eCommerce Application,Order Tracking,payment_method,Payment Method,readonly
+eCommerce Application,Order Tracking,order_summary,Order Summary,readonly
+eCommerce Application,Order Tracking,customer_notes,Customer Notes,textarea
+eCommerce Application,Order Tracking,order_total,Order Total,readonly
+eCommerce Application,Order Tracking,subtotal,Subtotal,readonly
+eCommerce Application,Order Tracking,tax,Tax,readonly
+eCommerce Application,Order Tracking,shipping_cost,Shipping Cost,readonly
+eCommerce Application,Support Ticket,subject,Subject,text
+eCommerce Application,Support Ticket,description,Description,textarea
+eCommerce Application,Support Ticket,priority,Priority,dropdown
+eCommerce Application,Support Ticket,status,Status,dropdown
+eCommerce Application,Support Ticket,attachments,Attachments,file
+eCommerce Application,Support Ticket,created_date,Created Date,date
+eCommerce Application,Support Ticket,updated_date,Updated Date,date
+eCommerce Application,Support Ticket,customer_name,Customer Name,text
+eCommerce Application,Support Ticket,customer_email,Customer Email,email
+eCommerce Application,Support Ticket,ticket_id,Ticket ID,readonly
+eCommerce Application,Support Ticket,assigned_to,Assigned To,text
+eCommerce Application,Support Ticket,department,Department,dropdown
+eCommerce Application,Support Ticket,resolution,Resolution,textarea
+eCommerce Application,Support Ticket,comments,Comments,textarea
+eCommerce Application,Support Ticket,follow_up_date,Follow-up Date,date
+eCommerce Application,Support Ticket,closure_date,Closure Date,date
+eCommerce Application,Support Ticket,response_time,Response Time,time
+eCommerce Application,Support Ticket,resolution_time,Resolution Time,time
+eCommerce Application,Support Ticket,customer_feedback,Customer Feedback,textarea
+eCommerce Application,Support Ticket,satisfaction_rating,Satisfaction Rating,number

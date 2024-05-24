@@ -30,7 +30,7 @@ type Validation struct {
 	UpdatedAt        time.Time      `gorm:"autoUpdateTime:milli"`
 	DeletedAt        gorm.DeletedAt `gorm:"index"`
 	Version          int            `gorm:"default:1"`
-	Attributes       []Attribute    `gorm:"many2many:attribute_validations;"`
+	// Attributes       []Attribute    `gorm:"many2many:attribute_validations;"`
 }
 
 type Attribute struct {

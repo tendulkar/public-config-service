@@ -24,7 +24,14 @@ func NewAttributeRepository(db *gorm.DB, logger *slog.Logger) *AttributeReposito
 
 func (r *AttributeRepository) GetAll(ctx context.Context) ([]model.Attribute, error) {
 	var attributes []model.Attribute
-	result := r.db.WithContext(ctx).Where("deleted_at IS NULL").Find(&attributes)
+	result := r.db.WithContext(ctx).
+		Joins("LEFT JOIN attribute_validations avs ON attributes.id = avs.attribute_id").
+		Joins("LEFT JOIN validations ON avs.validation_id = validations.id AND validations.deleted_at is NULL").
+		Joins("LEFT JOIN types ON attributes.type_id = types.id AND types.deleted_at is NULL").
+		Preload("Type").
+		Preload("Validations").
+		Find(&attributes, "attributes.deleted_at IS NULL")
+
 	if result.Error != nil {
 		r.logger.Error("error querying all attributes", slog.Any("error", result.Error))
 		return nil, result.Error
@@ -34,7 +41,13 @@ func (r *AttributeRepository) GetAll(ctx context.Context) ([]model.Attribute, er
 
 func (r *AttributeRepository) GetByID(ctx context.Context, id int64) (*model.Attribute, error) {
 	var a model.Attribute
-	result := r.db.WithContext(ctx).First(&a, "id = ? AND deleted_at IS NULL", id)
+	result := r.db.WithContext(ctx).
+		Joins("LEFT JOIN attribute_validations avs ON attributes.id = avs.attribute_id AND avs.attribute_id = ?", id).
+		Joins("LEFT JOIN validations ON avs.validation_id = validations.id AND validations.deleted_at is NULL").
+		Joins("LEFT JOIN types ON attributes.type_id = types.id AND types.deleted_at is NULL").
+		Preload("Type").
+		Preload("Validations").
+		First(&a, "attributes.id = ? AND attributes.deleted_at IS NULL", id)
 	if result.Error == gorm.ErrRecordNotFound {
 		return nil, nil
 	}

@@ -118,7 +118,7 @@ func setupTestDB(logger *slog.Logger) *gorm.DB {
 		logger.Error("failed to connect to database")
 		panic(err)
 	}
-	db.AutoMigrate(&model.Type{}, &model.Validation{}, &model.Attribute{}, &model.Form{})
+	// db.AutoMigrate(&model.Type{}, &model.Validation{}, &model.Attribute{}, &model.Form{})
 	return db
 }
 
@@ -212,6 +212,59 @@ func TestValidationAPI(t *testing.T) {
 	})
 }
 
+func buildAttribute(familySuffix string) model.Attribute {
+	newAttribute := model.Attribute{
+		Namespace:  "test_namespace",
+		Family:     fmt.Sprintf("test_family_%v", familySuffix),
+		Name:       "test_name",
+		Label:      "test_label",
+		DesignSpec: "{\"color\":\"blue\"}",
+		Validations: []model.Validation{
+			{
+				Namespace:        "test_namespace",
+				Family:           fmt.Sprintf("test_family_%v", familySuffix),
+				Name:             "test_name1",
+				RuleName:         "test_rule1",
+				ValidationParams: "{}",
+			},
+			{
+				Namespace:        "test_namespace",
+				Family:           fmt.Sprintf("test_family_%v", familySuffix),
+				Name:             "test_name2",
+				RuleName:         "test_rule2",
+				ValidationParams: "{}",
+			},
+			{
+				Namespace:        "test_namespace",
+				Family:           "test_family",
+				Name:             fmt.Sprintf("test_family_%v", familySuffix),
+				RuleName:         "test_rule3",
+				ValidationParams: "{}",
+			},
+		},
+		Type: model.Type{
+			Namespace:   "test_namespace",
+			Family:      fmt.Sprintf("test_family_%v", familySuffix),
+			Name:        "test_type",
+			ElementType: "test_element_type",
+			WidgetType:  "test_widget_type",
+		},
+	}
+	return newAttribute
+}
+
+func buildForm() model.Form {
+	return model.Form{
+		Namespace:  "test_namespace",
+		Family:     "test_form_family",
+		Name:       "test_form_name",
+		ActionName: "test_action_name",
+		Attributes: []model.Attribute{
+			buildAttribute("form"),
+		},
+	}
+}
+
 func TestAttributeAPI(t *testing.T) {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	db := setupTestDB(logger)
@@ -225,6 +278,36 @@ func TestAttributeAPI(t *testing.T) {
 			Name:       "test_name",
 			Label:      "test_label",
 			DesignSpec: "{\"color\":\"blue\"}",
+			Validations: []model.Validation{
+				{
+					Namespace:        "test_namespace",
+					Family:           "test_family",
+					Name:             "test_name1",
+					RuleName:         "test_rule1",
+					ValidationParams: "{}",
+				},
+				{
+					Namespace:        "test_namespace",
+					Family:           "test_family",
+					Name:             "test_name2",
+					RuleName:         "test_rule2",
+					ValidationParams: "{}",
+				},
+				{
+					Namespace:        "test_namespace",
+					Family:           "test_family",
+					Name:             "test_name3",
+					RuleName:         "test_rule3",
+					ValidationParams: "{}",
+				},
+			},
+			Type: model.Type{
+				Namespace:   "test_namespace",
+				Family:      "test_family_attribute",
+				Name:        "test_type",
+				ElementType: "test_element_type",
+				WidgetType:  "test_widget_type",
+			},
 		}
 		jsonValue, _ := json.Marshal(newAttribute)
 		req, _ := http.NewRequest("POST", "/attributes", bytes.NewBuffer(jsonValue))
@@ -253,6 +336,8 @@ func TestAttributeAPI(t *testing.T) {
 		json.Unmarshal(w.Body.Bytes(), &gotAttribute)
 		if gotAttribute.ID != createdAttribute.ID {
 			t.Fatalf("expected ID %d but got %d", createdAttribute.ID, gotAttribute.ID)
+		} else {
+			t.Logf("GetAttribute got :%v", gotAttribute)
 		}
 	})
 }
@@ -269,8 +354,70 @@ func TestFormAPI(t *testing.T) {
 			Family:     "test_family",
 			Name:       "test_name",
 			ActionName: "test_action",
-			Attributes: "{}",
+			Attributes: []model.Attribute{
+				{
+					Namespace:  "test_namespace",
+					Family:     "test_family",
+					Name:       "test_name1",
+					Label:      "test_label",
+					DesignSpec: "{\"color\":\"blue\"}",
+					Validations: []model.Validation{
+						{
+							Namespace:        "test_namespace",
+							Family:           "test_form_family1",
+							Name:             "test_name1",
+							RuleName:         "test_rule1",
+							ValidationParams: "{}",
+						},
+						{
+							Namespace:        "test_namespace",
+							Family:           "test_form_family1",
+							Name:             "test_name2",
+							RuleName:         "test_rule2",
+							ValidationParams: "{}",
+						},
+					},
+					Type: model.Type{
+						Namespace:   "test_namespace",
+						Family:      "test_form_family1",
+						Name:        "test_name1",
+						ElementType: "test_element",
+						WidgetType:  "test_widget",
+					},
+				},
+				{
+					Namespace:  "test_namespace",
+					Family:     "test_family",
+					Name:       "test_name2",
+					Label:      "test_label",
+					DesignSpec: "{\"color\":\"green\"}",
+					Validations: []model.Validation{
+						{
+							Namespace:        "test_namespace",
+							Family:           "test_form_family2",
+							Name:             "test_name1",
+							RuleName:         "test_rule1",
+							ValidationParams: "{}",
+						},
+						{
+							Namespace:        "test_namespace",
+							Family:           "test_form_family2",
+							Name:             "test_name2",
+							RuleName:         "test_rule2",
+							ValidationParams: "{}",
+						},
+					},
+					Type: model.Type{
+						Namespace:   "test_namespace",
+						Family:      "test_form_family2",
+						Name:        "test_name",
+						ElementType: "test_element",
+						WidgetType:  "test_widget",
+					},
+				},
+			},
 		}
+
 		jsonValue, _ := json.Marshal(newForm)
 		req, _ := http.NewRequest("POST", "/forms", bytes.NewBuffer(jsonValue))
 		req.Header.Set("Content-Type", "application/json")
@@ -298,6 +445,8 @@ func TestFormAPI(t *testing.T) {
 		json.Unmarshal(w.Body.Bytes(), &gotForm)
 		if gotForm.ID != createdForm.ID {
 			t.Fatalf("expected ID %d but got %d", createdForm.ID, gotForm.ID)
+		} else {
+			t.Logf("Got form: %v", gotForm)
 		}
 	})
 }

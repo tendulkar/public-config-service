@@ -33,6 +33,7 @@ CREATE TABLE attributes (
     name VARCHAR(255) NOT NULL,
     label VARCHAR(255) NOT NULL,
     design_spec JSON,
+    type_id BIGINT,
     created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL,
     updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL,
     deleted_at TIMESTAMP(3),
@@ -46,7 +47,6 @@ CREATE TABLE forms (
     family VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     action_name VARCHAR(255) NOT NULL,
-    attributes JSON NOT NULL,
     created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL,
     updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL,
     deleted_at TIMESTAMP(3),
@@ -54,21 +54,18 @@ CREATE TABLE forms (
     UNIQUE (namespace, family, name)
 );
 
-
--- Table: form_attributes (to link forms and attributes)
 CREATE TABLE form_attributes (
-    id SERIAL PRIMARY KEY,
-    form_id INT NOT NULL,
-    attribute_id INT NOT NULL,
+    form_id BIGINT,
+    attribute_id BIGINT,
+    PRIMARY KEY (form_id, attribute_id),
     FOREIGN KEY (form_id) REFERENCES forms(id),
     FOREIGN KEY (attribute_id) REFERENCES attributes(id)
 );
 
--- Table: attribute_validations (to link attributes and validations)
 CREATE TABLE attribute_validations (
-    id SERIAL PRIMARY KEY,
-    attribute_id INT NOT NULL,
-    validation_id INT NOT NULL,
+    attribute_id BIGINT,
+    validation_id BIGINT,
+    PRIMARY KEY (attribute_id, validation_id),
     FOREIGN KEY (attribute_id) REFERENCES attributes(id),
     FOREIGN KEY (validation_id) REFERENCES validations(id)
 );

@@ -23,7 +23,16 @@ func NewFormRepository(db *gorm.DB, logger *slog.Logger) *FormRepository {
 
 func (r *FormRepository) GetAll(ctx context.Context) ([]model.Form, error) {
 	var forms []model.Form
-	result := r.db.WithContext(ctx).Where("deleted_at IS NULL").Find(&forms)
+	result := r.db.WithContext(ctx).
+		Joins("LEFT JOIN form_attributes fas ON fas.form_id = forms.id").
+		Joins("LEFT JOIN attributes ON fas.attribute_id = attributes.id AND attributes.deleted_at is NULL").
+		Joins("LEFT JOIN attribute_validations avs ON attributes.id = avs.attribute_id").
+		Joins("LEFT JOIN validations ON avs.validation_id = validations.id AND validations.deleted_at is NULL").
+		Joins("LEFT JOIN types ON attributes.type_id = types.id AND types.deleted_at is NULL").
+		Preload("Attributes").
+		Preload("Attributes.Type").
+		Preload("Attributes.Validations").
+		Find(&forms, "forms.deleted_at IS NULL")
 	if result.Error != nil {
 		r.logger.Error("error querying all forms", slog.Any("error", result.Error))
 		return nil, result.Error
@@ -33,7 +42,16 @@ func (r *FormRepository) GetAll(ctx context.Context) ([]model.Form, error) {
 
 func (r *FormRepository) GetByID(ctx context.Context, id int64) (*model.Form, error) {
 	var f model.Form
-	result := r.db.WithContext(ctx).First(&f, "id = ? AND deleted_at IS NULL", id)
+	result := r.db.WithContext(ctx).
+		// Joins("LEFT JOIN form_attributes fas ON fas.form_id = forms.id").
+		// Joins("LEFT JOIN attributes ON fas.attribute_id = attributes.id AND attributes.deleted_at is NULL").
+		// Joins("LEFT JOIN attribute_validations avs ON attributes.id = avs.attribute_id").
+		// Joins("LEFT JOIN validations ON avs.validation_id = validations.id AND validations.deleted_at is NULL").
+		// Joins("LEFT JOIN types ON attributes.type_id = types.id AND types.deleted_at is NULL").
+		Preload("Attributes").
+		Preload("Attributes.Type").
+		Preload("Attributes.Validations").
+		First(&f, "forms.id = ? AND forms.deleted_at IS NULL", id)
 	if result.Error == gorm.ErrRecordNotFound {
 		return nil, nil
 	}
@@ -45,6 +63,7 @@ func (r *FormRepository) GetByID(ctx context.Context, id int64) (*model.Form, er
 }
 
 func (r *FormRepository) Create(ctx context.Context, f *model.Form) error {
+	r.logger.Info("Form to be created", slog.Any("form", f))
 	result := r.db.WithContext(ctx).Create(f)
 	if result.Error != nil {
 		r.logger.Error("error creating form", slog.Any("error", result.Error))
