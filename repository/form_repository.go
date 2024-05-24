@@ -63,7 +63,7 @@ func (r *FormRepository) GetByID(ctx context.Context, id int64) (*model.Form, er
 }
 
 func (r *FormRepository) Create(ctx context.Context, f *model.Form) error {
-	r.logger.Info("Form to be created", slog.Any("form", f))
+	// r.logger.Info("Form to be created", slog.Any("form", f))
 	result := r.db.WithContext(ctx).Create(f)
 	if result.Error != nil {
 		r.logger.Error("error creating form", slog.Any("error", result.Error))
